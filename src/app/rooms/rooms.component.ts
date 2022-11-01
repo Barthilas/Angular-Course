@@ -1,5 +1,6 @@
 import { Component, DoCheck, OnInit } from '@angular/core';
 import { checkMargins } from 'ngx-bootstrap/positioning';
+import { Helpers } from '../helpers/helpers';
 import { Room, RoomList } from './rooms';
 
 @Component({
@@ -25,8 +26,11 @@ export class RoomsComponent implements OnInit, DoCheck {
   roomsList: RoomList[] = [];
 
   constructor() {}
+
+  // Do not implement together with ngOnChanges.
+  // Generally avoid.
   ngDoCheck(): void {
-    throw new Error('Method not implemented.');
+    console.log(Helpers.prepareConsoleLogMsg("ngDoCheck called"))
   }
 
   ngOnInit(): void {

@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Helpers } from 'src/app/helpers/helpers';
 import { RoomList } from '../rooms';
 
 @Component({
@@ -25,7 +26,7 @@ export class RoomsListComponent implements OnInit, OnChanges {
   //ngOnChanges can be applied on component with input property.
   //triggered by data update on input().
   ngOnChanges(changes: SimpleChanges): void {
-    console.log("-------ngOnChanges ran-------")
+    console.log(Helpers.prepareConsoleLogMsg("ngOnChanges ran"))
     console.log(changes)
     if(changes['title'])
       this.title = changes['title'].currentValue.toUpperCase();
