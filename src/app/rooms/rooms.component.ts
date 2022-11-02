@@ -1,4 +1,4 @@
-import { AfterViewChecked, AfterViewInit, Component, DoCheck, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, Component, DoCheck, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { checkMargins } from 'ngx-bootstrap/positioning';
 import { HeaderComponent } from '../header/header.component';
 import { Helpers } from '../helpers/helpers';

@@ -17,7 +17,7 @@
   <button (click)="addRoom($event)">Add Room</button>
 </div>
 
-<div *ngIf="rooms.availableRooms > 0">
+<div *ngIf="hideRooms">
 <app-rooms-list [title]="title" [rooms]="roomsList" (selectedRoom)="selectRoom($event)"></app-rooms-list>
 </div>
 <button (click)="toggle()">Toggle</button>

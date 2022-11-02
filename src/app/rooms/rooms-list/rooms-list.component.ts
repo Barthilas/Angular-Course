@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Helpers } from 'src/app/helpers/helpers';
 import { RoomList } from '../rooms';
 
@@ -13,7 +13,7 @@ import { RoomList } from '../rooms';
   //3. Properties should be immutable.
 })
 
-export class RoomsListComponent implements OnInit, OnChanges {
+export class RoomsListComponent implements OnInit, OnChanges, OnDestroy {
 
 @Input() rooms: RoomList[] = [];
 
@@ -30,6 +30,12 @@ export class RoomsListComponent implements OnInit, OnChanges {
     console.log(changes)
     if(changes['title'])
       this.title = changes['title'].currentValue.toUpperCase();
+  }
+
+  //Trigger: whenever component gets removed from DOM.
+  //free memory, unsubscribe from data.
+  ngOnDestroy(): void {
+    console.log(Helpers.prepareConsoleLogMsg("ngOnDestroy"))
   }
 
   ngOnInit(): void {
