@@ -3,6 +3,7 @@ import { checkMargins } from 'ngx-bootstrap/positioning';
 import { HeaderComponent } from '../header/header.component';
 import { Helpers } from '../helpers/helpers';
 import { Room, RoomList } from './rooms';
+import { RoomsService } from './services/rooms.service';
 
 @Component({
   selector: 'app-rooms',
@@ -35,7 +36,8 @@ export class RoomsComponent implements OnInit, DoCheck, AfterViewInit, AfterView
 
   roomsList: RoomList[] = [];
 
-  constructor() {}
+  //DI - try to not access service from template -> private/protected
+  constructor(private roomsService: RoomsService) {}
 
   //Rarely used
   //change detector has completed one change-check cycle
@@ -67,7 +69,7 @@ export class RoomsComponent implements OnInit, DoCheck, AfterViewInit, AfterView
 
   ngOnInit(): void {
     console.log(Helpers.prepareConsoleLogMsg("ngOnInit called"))
-    this.initData();
+    this.roomsList = this.roomsService.getRooms();
   }
 
   toggle() {
@@ -94,30 +96,5 @@ export class RoomsComponent implements OnInit, DoCheck, AfterViewInit, AfterView
 
   selectRoom(room: RoomList) {
     this.selectedRoom = room;
-  }
-
-  private initData() {
-    this.roomsList = [
-      {
-        roomNumber: 1,
-        roomType: 'Deluxe Room',
-        amenities: 'Everything, WIFI.',
-        price: 500,
-        photos: 'https://',
-        checkinTime: new Date('1.1.1980'),
-        checkoutTime: new Date('2.1.1980'),
-        rating: 4.5,
-      },
-      {
-        roomNumber: 2,
-        roomType: 'Deluxe Room 2',
-        amenities: 'No Wifi',
-        price: 1000,
-        photos: 'https://',
-        checkinTime: new Date('1.1.1980'),
-        checkoutTime: new Date('2.1.1980'),
-        rating: 3.5434,
-      },
-    ];
   }
 }
