@@ -1,5 +1,6 @@
 import { AfterViewChecked, AfterViewInit, Component, DoCheck, OnDestroy, OnInit, QueryList, SkipSelf, ViewChild, ViewChildren } from '@angular/core';
 import { checkMargins } from 'ngx-bootstrap/positioning';
+import { Observable } from 'rxjs';
 import { HeaderComponent } from '../header/header.component';
 import { Helpers } from '../helpers/helpers';
 import { Room, RoomList } from './rooms';
@@ -29,6 +30,14 @@ export class RoomsComponent implements OnInit, DoCheck, AfterViewInit, AfterView
     availableRooms: 10,
     bookedRooms: 5,
   };
+
+  stream = new Observable(observer => {
+    observer.next('user1');
+    observer.next('user2');
+    observer.next('user3');
+    observer.complete();
+    // observer.error('error');
+  })
 
   title = 'Room List';
 
@@ -69,8 +78,17 @@ export class RoomsComponent implements OnInit, DoCheck, AfterViewInit, AfterView
   }
 
   ngOnInit(): void {
+    this.stream.subscribe({
+      next: (value) => console.log(value),
+      complete: () => console.log("complete"),
+    })
+    this.stream.subscribe((data) => {
+      console.log(data)
+    })
     console.log(Helpers.prepareConsoleLogMsg("ngOnInit called"))
-    this.roomsList = this.roomsService.getRooms();
+    this.roomsService.getRooms().subscribe(rooms => {
+      this.roomsList = rooms;
+    });
   }
 
   toggle() {
@@ -80,7 +98,7 @@ export class RoomsComponent implements OnInit, DoCheck, AfterViewInit, AfterView
 
   addRoom(e: any) {
     const room: RoomList = {
-      roomNumber: 4,
+      roomNumber: '4',
       roomType: 'Dummy',
       amenities: 'Something',
       price: 500,
@@ -92,7 +110,11 @@ export class RoomsComponent implements OnInit, DoCheck, AfterViewInit, AfterView
 
     //binded in child. ChangeDetection strategy onPush -> object should not be mutable. Return new instance.
     // this.roomsList.push(room);
-    this.roomsList = [...this.roomsList, room]
+    // this.roomsList = [...this.roomsList, room]
+
+    this.roomsService.addRooms(room).subscribe((data) => {
+      this.roomsList = data
+    })
   }
 
   selectRoom(room: RoomList) {

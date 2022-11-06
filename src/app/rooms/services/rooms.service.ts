@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { APP_SERVICE_CONFIG } from 'src/app/AppConfig/appconfig.service';
 import { IAppConfig } from 'src/app/AppConfig/IAppConfig';
@@ -16,7 +17,7 @@ any -
 export class RoomsService {
   roomList: RoomList[] = [
     {
-      roomNumber: 1,
+      roomNumber: '1',
       roomType: 'Deluxe Room',
       amenities: 'Everything, WIFI.',
       price: 500,
@@ -26,7 +27,7 @@ export class RoomsService {
       rating: 4.5,
     },
     {
-      roomNumber: 2,
+      roomNumber: '2',
       roomType: 'Deluxe Room 2',
       amenities: 'No Wifi',
       price: 1000,
@@ -37,12 +38,17 @@ export class RoomsService {
     },
   ];
 
-  constructor(@Inject(APP_SERVICE_CONFIG) private config: IAppConfig) {
+  constructor(@Inject(APP_SERVICE_CONFIG) private config: IAppConfig, private http: HttpClient) {
     console.log(config.apiEndpoint)
     console.log("Service initialized.")
   }
 
   getRooms() {
-    return this.roomList;
+    return this.http.get<RoomList[]>('/api/rooms');
+  }
+
+  addRooms(room: RoomList)
+  {
+    return this.http.post<RoomList[]>('/api/rooms', room)
   }
 }

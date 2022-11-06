@@ -28,7 +28,7 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss",
+              "src/styles.scss"
             ],
             "scripts": []
           },
@@ -72,7 +72,8 @@
               "browserTarget": "hotelinventoryapp:build:production"
             },
             "development": {
-              "browserTarget": "hotelinventoryapp:build:development"
+              "browserTarget": "hotelinventoryapp:build:development",
+              "proxyConfig": "proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"
