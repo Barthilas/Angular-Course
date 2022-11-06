@@ -1,4 +1,4 @@
-import { AfterViewChecked, AfterViewInit, Component, DoCheck, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { AfterViewChecked, AfterViewInit, Component, DoCheck, OnDestroy, OnInit, QueryList, SkipSelf, ViewChild, ViewChildren } from '@angular/core';
 import { checkMargins } from 'ngx-bootstrap/positioning';
 import { HeaderComponent } from '../header/header.component';
 import { Helpers } from '../helpers/helpers';
@@ -37,7 +37,8 @@ export class RoomsComponent implements OnInit, DoCheck, AfterViewInit, AfterView
   roomsList: RoomList[] = [];
 
   //DI - try to not access service from template -> private/protected
-  constructor(private roomsService: RoomsService) {}
+  //SkipSelf provide modifier - skip search for service in this component.
+  constructor(@SkipSelf() private roomsService: RoomsService) {}
 
   //Rarely used
   //change detector has completed one change-check cycle
