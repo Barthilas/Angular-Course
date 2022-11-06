@@ -1,4 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
+import { APP_SERVICE_CONFIG } from 'src/app/AppConfig/appconfig.service';
+import { IAppConfig } from 'src/app/AppConfig/IAppConfig';
+import { environment } from 'src/environments/environment';
 import { RoomList } from '../rooms';
 
 /* providedIn
@@ -34,7 +37,8 @@ export class RoomsService {
     },
   ];
 
-  constructor() {
+  constructor(@Inject(APP_SERVICE_CONFIG) private config: IAppConfig) {
+    console.log(config.apiEndpoint)
     console.log("Service initialized.")
   }
 

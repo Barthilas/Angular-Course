@@ -1,6 +1,7 @@
-import { AfterViewInit, Component, ElementRef, OnInit, Optional, ViewChild, ViewContainerRef } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Inject, OnInit, Optional, ViewChild, ViewContainerRef } from '@angular/core';
 import { LoggerService } from './logger.service';
 import { RoomsComponent } from './rooms/rooms.component';
+import { LocalStorageToken } from './localstorage.token';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,8 @@ import { RoomsComponent } from './rooms/rooms.component';
 export class AppComponent {
 
   //optional - might not exist.
-  constructor(@Optional() private loggerService: LoggerService)
+  constructor(@Optional() private loggerService: LoggerService,
+  @Inject(LocalStorageToken) private localStorage: Storage)
   {
 
   }
@@ -26,6 +28,7 @@ export class AppComponent {
 
     this.loggerService?.log("AppComponent.ngOnInit()")
     this.name.nativeElement.innerText = "Dynamic edited"
+    this.localStorage.setItem("name", "value");
   }
 
   @ViewChild('name', {static: true}) name!: ElementRef
