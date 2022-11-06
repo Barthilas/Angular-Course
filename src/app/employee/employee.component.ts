@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
   selector: 'app-employee',
   templateUrl: './employee.component.html',
   styleUrls: ['./employee.component.scss']
+  // providers - add service to component. Creates new instance.
 })
 export class EmployeeComponent implements OnInit {
 

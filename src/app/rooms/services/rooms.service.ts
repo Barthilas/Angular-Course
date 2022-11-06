@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { RoomList } from '../rooms';
 
 /* providedIn
-root -
+root - shorthand instead of registering in app module, single instance available across.
 platform - used internally
 any -
 */
@@ -34,7 +34,9 @@ export class RoomsService {
     },
   ];
 
-  constructor() {}
+  constructor() {
+    
+  }
 
   getRooms() {
     return this.roomList;

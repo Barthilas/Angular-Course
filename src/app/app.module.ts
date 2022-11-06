@@ -24,6 +24,7 @@ import { EmployeeComponent } from './employee/employee.component';
     AppRoutingModule,
     TooltipModule.forRoot()
   ],
+  //old way of registering services
   providers: [],
   bootstrap: [AppComponent]
 })
