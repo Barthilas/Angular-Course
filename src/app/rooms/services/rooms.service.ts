@@ -1,4 +1,4 @@
-import { HttpClient, HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { shareReplay } from 'rxjs';
 import { APP_SERVICE_CONFIG } from 'src/app/AppConfig/appconfig.service';
@@ -16,6 +16,10 @@ any -
   providedIn: 'root',
 })
 export class RoomsService {
+  //just use http-interceptor.
+  header = new HttpHeaders({
+    'token': "1234"
+  });
   roomList: RoomList[] = [
     {
       roomNumber: '1',
@@ -39,7 +43,7 @@ export class RoomsService {
     },
   ];
 
-  getRooms$ = this.http.get<RoomList[]>('/api/rooms').pipe(
+  getRooms$ = this.http.get<RoomList[]>('/api/rooms', {headers: this.header}).pipe(
     shareReplay(1)
   );
 
@@ -52,7 +56,9 @@ export class RoomsService {
   }
 
   getRooms() {
-    return this.http.get<RoomList[]>('/api/rooms');
+    return this.http.get<RoomList[]>('/api/rooms', {
+
+    });
   }
 
   //returns all data.
