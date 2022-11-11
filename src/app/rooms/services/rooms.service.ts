@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpRequest } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { APP_SERVICE_CONFIG } from 'src/app/AppConfig/appconfig.service';
 import { IAppConfig } from 'src/app/AppConfig/IAppConfig';
@@ -38,17 +38,39 @@ export class RoomsService {
     },
   ];
 
-  constructor(@Inject(APP_SERVICE_CONFIG) private config: IAppConfig, private http: HttpClient) {
-    console.log(config.apiEndpoint)
-    console.log("Service initialized.")
+  constructor(
+    @Inject(APP_SERVICE_CONFIG) private config: IAppConfig,
+    private http: HttpClient
+  ) {
+    console.log(config.apiEndpoint);
+    console.log('Service initialized.');
   }
 
   getRooms() {
     return this.http.get<RoomList[]>('/api/rooms');
   }
 
-  addRooms(room: RoomList)
-  {
-    return this.http.post<RoomList[]>('/api/rooms', room)
+  //returns all data.
+  addRooms(room: RoomList) {
+    return this.http.post<RoomList[]>('/api/rooms', room);
+  }
+
+  editRoom(room: RoomList) {
+    return this.http.put<RoomList[]>(`/api/rooms/${room.roomNumber}`, room);
+  }
+
+  deleteRoom(id: string) {
+    return this.http.delete<RoomList[]>(`/api/rooms/${id}`);
+  }
+
+  getPhotos() {
+    const request = new HttpRequest(
+      'GET',
+      'https://jsonplaceholder.typicode.com/photos',
+      {
+        reportProgress: true,
+      }
+    );
+    return this.http.request(request);
   }
 }
