@@ -13,13 +13,13 @@ import { RoomsService } from '../rooms/services/rooms.service';
   selector: 'app-container',
   templateUrl: './container.component.html',
   styleUrls: ['./container.component.scss'],
-  providers: [RoomsService]
+  // providers: [RoomsService]
 })
 export class ContainerComponent implements OnInit, AfterContentInit {
   @ContentChild(EmployeeComponent) employee!: EmployeeComponent;
 
   //All components under container will use this new instance. No child component and itself will go above in resolution tree to check where RoomsService is registered.
-  constructor(@Host() private roomsService: RoomsService) {}
+  constructor(/*@Host() private roomsService: RoomsService*/) {}
 
   ngAfterContentInit(): void {
     console.log(Helpers.prepareConsoleLogMsg('ngAfterContentInit'));

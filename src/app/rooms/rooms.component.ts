@@ -12,7 +12,7 @@ import {
   ViewChildren,
 } from '@angular/core';
 import { checkMargins } from 'ngx-bootstrap/positioning';
-import { Observable } from 'rxjs';
+import { catchError, map, Observable, of, Subject, Subscription } from 'rxjs';
 import { HeaderComponent } from '../header/header.component';
 import { Helpers } from '../helpers/helpers';
 import { Room, RoomList } from './rooms';
@@ -56,6 +56,24 @@ export class RoomsComponent
 
   totalBytes = 0;
 
+  subscription!: Subscription;
+
+  error$ : Subject<string> = new Subject();
+
+  getError$ = this.error$.asObservable();
+
+  rooms$ = this.roomsService.getRooms$.pipe(
+    catchError((err) => {
+      console.log(err);
+      this.error$.next(err.message)
+      return of([]);
+    })
+  );
+
+  roomsCount$ = this.roomsService.getRooms$.pipe((
+    map((rooms) => rooms.length)
+  ))
+
   title = 'Room List';
 
   selectedRoom!: RoomList;
@@ -86,6 +104,12 @@ export class RoomsComponent
     // let a = this.headerChildrenComponent.get(0)
   }
 
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
+  }
+
   // Do not implement together with ngOnChanges.
   // Generally avoid.
   ngDoCheck(): void {
@@ -93,6 +117,7 @@ export class RoomsComponent
   }
 
   ngOnInit(): void {
+
     this.roomsService.getPhotos().subscribe((event) => {
       switch (event.type) {
         case HttpEventType.Sent:
@@ -119,9 +144,10 @@ export class RoomsComponent
       console.log(data);
     });
     console.log(Helpers.prepareConsoleLogMsg('ngOnInit called'));
-    this.roomsService.getRooms().subscribe((rooms) => {
-      this.roomsList = rooms;
-    });
+
+    // this.subscription = this.roomsService.getRooms$.subscribe((rooms) => {
+    //   this.roomsList = rooms;
+    // });
   }
 
   toggle() {

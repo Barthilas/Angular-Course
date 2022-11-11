@@ -2,26 +2,42 @@
 <app-header></app-header>
 <app-header></app-header>
 <app-header></app-header>
+<!-- {{rooms$ | async | json}} -->
 <div [hidden]="hideRooms">
   Number of Rooms:
-  <div [ngStyle]="{'color': rooms.availableRooms ? 'green' : 'red'}" [innerText]="numberOfRooms"></div>
+  <div
+    [ngStyle]="{ color: rooms.availableRooms ? 'green' : 'red' }"
+    [innerText]="numberOfRooms"
+  ></div>
 </div>
 
 <!-- {{ rooms?.availableRooms ?? "No rooms" }} -->
 
 <div *ngIf="selectedRoom">
-  {{selectedRoom | json}}
+  {{ selectedRoom | json }}
 </div>
 
 <div>
   <button (click)="addRoom($event)">Add Room</button>
 </div>
 
-<div *ngIf="hideRooms">
-<app-rooms-list [title]="title" [rooms]="roomsList" (selectedRoom)="selectRoom($event)"></app-rooms-list>
+<h1>
+  <!-- {{ getError$ | async }} -->
+  Number of Rooms: {{roomsCount$ | async}}
+</h1>
+
+<!-- <div *ngIf="hideRooms"> -->
+<!-- try to avoid multiple async pipes, causes subscription... -->
+<div *ngIf="rooms$ | async as rooms">
+  <!-- <app-rooms-list [title]="title" [rooms]="roomsList" (selectedRoom)="selectRoom($event)"></app-rooms-list> -->
+  <app-rooms-list
+    [title]="title"
+    [rooms]="rooms"
+    (selectedRoom)="selectRoom($event)"
+  ></app-rooms-list>
 </div>
 <button (click)="toggle()">Toggle</button>
 <button (click)="editRoom()">Edit Room</button>
 <button (click)="deleteRoom()">Delete Room</button>
 
-<h1>{{totalBytes}}</h1>
+<h1>{{ totalBytes }}</h1>

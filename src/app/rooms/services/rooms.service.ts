@@ -1,5 +1,6 @@
 import { HttpClient, HttpRequest } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
+import { shareReplay } from 'rxjs';
 import { APP_SERVICE_CONFIG } from 'src/app/AppConfig/appconfig.service';
 import { IAppConfig } from 'src/app/AppConfig/IAppConfig';
 import { environment } from 'src/environments/environment';
@@ -37,6 +38,10 @@ export class RoomsService {
       rating: 3.5434,
     },
   ];
+
+  getRooms$ = this.http.get<RoomList[]>('/api/rooms').pipe(
+    shareReplay(1)
+  );
 
   constructor(
     @Inject(APP_SERVICE_CONFIG) private config: IAppConfig,
