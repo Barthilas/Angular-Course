@@ -2,6 +2,7 @@ import { AfterViewInit, Component, ElementRef, Inject, OnInit, Optional, ViewChi
 import { LoggerService } from './logger.service';
 import { RoomsComponent } from './rooms/rooms.component';
 import { LocalStorageToken } from './localstorage.token';
+import { InitService } from './init.service';
 
 @Component({
   selector: 'app-root',
@@ -13,9 +14,10 @@ export class AppComponent {
 
   //optional - might not exist.
   constructor(@Optional() private loggerService: LoggerService,
-  @Inject(LocalStorageToken) private localStorage: Storage)
+  @Inject(LocalStorageToken) private localStorage: Storage,
+   private initService: InitService)
   {
-
+    console.log("Loaded before app init: ", initService.config)
   }
   // @ViewChild('user', {read: ViewContainerRef}) vcr!: ViewContainerRef
   // ngAfterViewInit(): void {
