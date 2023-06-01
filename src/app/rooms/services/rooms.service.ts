@@ -1,6 +1,5 @@
 import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
-import { shareReplay } from 'rxjs';
 import { APP_SERVICE_CONFIG } from 'src/app/AppConfig/appconfig.service';
 import { IAppConfig } from 'src/app/AppConfig/IAppConfig';
 import { environment } from 'src/environments/environment';

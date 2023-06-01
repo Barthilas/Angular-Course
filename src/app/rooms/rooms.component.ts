@@ -1,4 +1,3 @@
-import { HttpEventType } from '@angular/common/http';
 import {
   AfterViewChecked,
   AfterViewInit,
@@ -67,6 +66,7 @@ export class RoomsComponent
   rooms$ = this.roomsService.getRooms$.pipe(
     catchError((err) => {
       console.log(err);
+      // dont do this in component, ngOnChanges will be called. This whole call should probably be inside service. (Demo)
       this.error$.next(err.message)
       return of([]);
     })
@@ -81,26 +81,6 @@ export class RoomsComponent
   selectedRoom!: RoomList;
 
   roomsList: RoomList[] = [];
-
-  totalBytes = 0;
-
-  subscription!: Subscription;
-
-  error$: Subject<string> = new Subject<string>();
-  getError$ = this.error$.asObservable();
-
-  rooms$ = this.roomsService.getRooms$.pipe(
-    catchError((err) => {
-      console.log(err);
-      // dont do this in component, ngOnChanges will be called. This whole call should probably be inside service. (Demo)
-      this.error$.next(err.message)
-      return of([]);
-    })
-  );
-
-  roomsCount$ = this.roomsService.getRooms$.pipe(
-    map((rooms) => rooms.length)
-  )
 
   //DI - try to not access service from template -> private/protected
   //SkipSelf provide modifier - skip search for service in this component.
@@ -127,12 +107,6 @@ export class RoomsComponent
 
     this.headerChildrenComponent.last.title = 'last title';
     // let a = this.headerChildrenComponent.get(0)
-  }
-
-  ngOnDestroy() {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
   }
 
   // Do not implement together with ngOnChanges.
