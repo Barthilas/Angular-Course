@@ -4,7 +4,8 @@ import { shareReplay } from 'rxjs';
 import { APP_SERVICE_CONFIG } from 'src/app/AppConfig/appconfig.service';
 import { IAppConfig } from 'src/app/AppConfig/IAppConfig';
 import { environment } from 'src/environments/environment';
-import { RoomList } from '../rooms';
+import { Room, RoomList } from '../rooms';
+import { shareReplay } from 'rxjs';
 
 /* providedIn
 root - shorthand instead of registering in app module, single instance available across.

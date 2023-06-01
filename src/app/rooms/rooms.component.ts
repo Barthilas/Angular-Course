@@ -17,6 +17,8 @@ import { HeaderComponent } from '../header/header.component';
 import { Helpers } from '../helpers/helpers';
 import { Room, RoomList } from './rooms';
 import { RoomsService } from './services/rooms.service';
+import { PhotosService } from './services/photos.service';
+import { HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'app-rooms',
@@ -80,9 +82,32 @@ export class RoomsComponent
 
   roomsList: RoomList[] = [];
 
+  totalBytes = 0;
+
+  subscription!: Subscription;
+
+  error$: Subject<string> = new Subject<string>();
+  getError$ = this.error$.asObservable();
+
+  rooms$ = this.roomsService.getRooms$.pipe(
+    catchError((err) => {
+      console.log(err);
+      // dont do this in component, ngOnChanges will be called. This whole call should probably be inside service. (Demo)
+      this.error$.next(err.message)
+      return of([]);
+    })
+  );
+
+  roomsCount$ = this.roomsService.getRooms$.pipe(
+    map((rooms) => rooms.length)
+  )
+
   //DI - try to not access service from template -> private/protected
   //SkipSelf provide modifier - skip search for service in this component.
-  constructor(@SkipSelf() private roomsService: RoomsService) {}
+  constructor(
+    @SkipSelf() private roomsService: RoomsService,
+    private photosService: PhotosService
+  ) {}
 
   //Rarely used
   //change detector has completed one change-check cycle
@@ -148,6 +173,10 @@ export class RoomsComponent
     // this.subscription = this.roomsService.getRooms$.subscribe((rooms) => {
     //   this.roomsList = rooms;
     // });
+  }
+
+  ngOnDestroy() {
+    if (this.subscription) this.subscription.unsubscribe();
   }
 
   toggle() {

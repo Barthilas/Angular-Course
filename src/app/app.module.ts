@@ -65,6 +65,7 @@ function initFactory(initService: InitService) {
       multi: true,
     },
     {
+      // Initialized at app startup.
       provide: APP_INITIALIZER,
       useFactory: initFactory,
       deps: [InitService],

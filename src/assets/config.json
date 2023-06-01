@@ -1,4 +1,4 @@
 {
   "apiVersion": "v1",
-  "something": 12355
+  "kind": "pod"
 }
