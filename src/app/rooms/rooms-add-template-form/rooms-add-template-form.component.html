@@ -9,7 +9,7 @@
   {{ successMessage }}
 </div>
 
-<form #roomsForm="ngForm" (ngSubmit)="addRoom()" action="">
+<form #roomsForm="ngForm" (ngSubmit)="addRoom(roomsForm)" action="">
   <div class="form-group">
     <input
       required
@@ -34,6 +34,9 @@
     />
     <div class="alert alert-danger" *ngIf="roomamanaties.errors?.['minlength']">
       Amenties should be min 5 chars.
+    </div>
+    <div *ngIf="roomamanaties.dirty && roomamanaties.errors?.['required']">
+      Please provide the amenities
     </div>
   </div>
   <div class="form-group">
