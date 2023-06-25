@@ -18,6 +18,7 @@ import { Room, RoomList } from './rooms';
 import { RoomsService } from './services/rooms.service';
 import { PhotosService } from './services/photos.service';
 import { HttpEventType } from '@angular/common/http';
+import { ConfigService } from '../services/config.service';
 
 @Component({
   selector: 'app-rooms',
@@ -86,7 +87,8 @@ export class RoomsComponent
   //SkipSelf provide modifier - skip search for service in this component.
   constructor(
     @SkipSelf() private roomsService: RoomsService,
-    private photosService: PhotosService
+    private photosService: PhotosService,
+    private configService: ConfigService
   ) {}
 
   //Rarely used

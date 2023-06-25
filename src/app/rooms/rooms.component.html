@@ -17,8 +17,9 @@
   {{ selectedRoom | json }}
 </div>
 
+<!-- (click)="addRoom($event)" -->
 <div>
-  <button (click)="addRoom($event)">Add Room</button>
+  <button routerLink="add">Add Room</button>
 </div>
 
 <h1>
@@ -41,3 +42,5 @@
 <button (click)="deleteRoom()">Delete Room</button>
 
 <h1>{{ totalBytes }}</h1>
+
+<router-outlet></router-outlet>

@@ -3,6 +3,7 @@ import { LoggerService } from './logger.service';
 import { RoomsComponent } from './rooms/rooms.component';
 import { LocalStorageToken } from './localstorage.token';
 import { InitService } from './init.service';
+import { ConfigService } from './services/config.service';
 
 @Component({
   selector: 'app-root',
@@ -14,9 +15,9 @@ export class AppComponent {
 
   //optional - might not exist.
   constructor(@Optional() private loggerService: LoggerService,
-  @Inject(LocalStorageToken) private localStorage: Storage,
-   private initService: InitService)
-  {
+    @Inject(LocalStorageToken) private localStorage: Storage,
+    private initService: InitService,
+    private configService: ConfigService) {
     console.log("Loaded before app init: ", initService.config)
   }
   // @ViewChild('user', {read: ViewContainerRef}) vcr!: ViewContainerRef
@@ -33,7 +34,7 @@ export class AppComponent {
     this.localStorage.setItem("name", "value");
   }
 
-  @ViewChild('name', {static: true}) name!: ElementRef
+  @ViewChild('name', { static: true }) name!: ElementRef
   title = 'hotelinventoryapp';
   // role = "admin";
 }
