@@ -1,1 +1,135 @@
-<p>booking works!</p>
+{{ bookingForm.value | json }}
+{{ bookingForm.pristine | json }}
+{{ bookingForm.dirty | json }}
+
+<form (ngSubmit)="addBooking()" class="example-form" [formGroup]="bookingForm">
+  <mat-form-field class="example-full-width">
+    <mat-label>Room id</mat-label>
+    <input type="text" matInput formControlName="roomId" placeholder="RoomId" />
+  </mat-form-field>
+  <mat-form-field class="example-full-width">
+    <mat-label>Guest Email</mat-label>
+    <input
+      type="email"
+      matInput
+      formControlName="guestEmail"
+      placeholder="guestEmail"
+    />
+  </mat-form-field>
+  <mat-form-field class="example-full-width">
+    <mat-label>Guest Name</mat-label>
+    <input
+      type="text"
+      matInput
+      formControlName="guestName"
+      placeholder="guestName"
+    />
+  </mat-form-field>
+  <mat-form-field class="example-full-width">
+    <mat-label>Mobile number</mat-label>
+    <input
+      type="email"
+      matInput
+      formControlName="mobileNumber"
+      placeholder="mobileNumber"
+    />
+  </mat-form-field>
+  <mat-form-field class="example-full-width">
+    <mat-label>Booking Amount</mat-label>
+    <input
+      type="email"
+      matInput
+      formControlName="bookingAmount"
+      placeholder="bookingAmount"
+    />
+  </mat-form-field>
+  <mat-form-field class="example-full-width">
+    <mat-label>Checkin date</mat-label>
+    <input matInput [matDatepicker]="picker" formControlName="checkinDate" />
+    <mat-hint>MM/DD/YYYY</mat-hint>
+    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field class="example-full-width">
+    <mat-label>Checkout date</mat-label>
+    <input matInput [matDatepicker]="picker2" formControlName="checkoutDate" />
+    <mat-hint>MM/DD/YYYY</mat-hint>
+    <mat-datepicker-toggle
+      matIconSuffix
+      [for]="picker2"
+    ></mat-datepicker-toggle>
+    <mat-datepicker #picker2></mat-datepicker>
+  </mat-form-field>
+
+  <div formGroupName="address">
+    <mat-accordion class="example-headers-align" multi>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title> Address </mat-panel-title>
+          <mat-panel-description>
+            Specify Address
+            <mat-icon>account_circle</mat-icon>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <mat-form-field class="example-full-width">
+          <mat-label>Address</mat-label>
+          <input
+            type="text"
+            matInput
+            formControlName="addressLine"
+            placeholder="address"
+          />
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <mat-label>City</mat-label>
+          <input
+            type="text"
+            matInput
+            formControlName="city"
+            placeholder="city"
+          />
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <mat-label>State</mat-label>
+          <input
+            type="text"
+            matInput
+            formControlName="state"
+            placeholder="state"
+          />
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <mat-label>Country</mat-label>
+          <input
+            type="text"
+            matInput
+            formControlName="country"
+            placeholder="country"
+          />
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+          <mat-label>ZipCode</mat-label>
+          <input
+            type="number"
+            matInput
+            formControlName="zipCode"
+            placeholder="zipCode"
+          />
+        </mat-form-field>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+
+  <div>
+    <button mat-raised-button color="primary" type="button" (click)="addGuest()">Add Guest</button>
+  </div>
+
+  <div>
+    <button mat-raised-button color="primary">Book Room</button>
+  </div>
+</form>

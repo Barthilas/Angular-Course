@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { RoomsAddTemplateFormComponent } from './rooms-add-template-form/rooms-add-template-form.component';
 import { RoomsBookingComponent } from './rooms-booking/rooms-booking.component';
 import { RoomsComponent } from './rooms.component';
+import { RoomGuard } from './guards/room.guard';
 
 // Check lazy loading inside Console -> Sources (should not be visible.) or network tab.
 
@@ -11,6 +12,7 @@ const routes: Routes = [
     path: '', // because of lazy load.
     // path: 'rooms',
     component: RoomsComponent,
+    canActivateChild: [RoomGuard],
     children: [
       // beware of ordering here, otherwise it will match second route.
       { path: 'add', component: RoomsAddTemplateFormComponent },
