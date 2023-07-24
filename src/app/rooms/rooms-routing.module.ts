@@ -16,7 +16,7 @@ const routes: Routes = [
     children: [
       // beware of ordering here, otherwise it will match second route.
       { path: 'add', component: RoomsAddTemplateFormComponent },
-      { path: ':roomid', component: RoomsBookingComponent },
+      // { path: ':roomid', component: RoomsBookingComponent },
     ]
   },
 ];

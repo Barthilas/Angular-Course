@@ -1,6 +1,8 @@
 {{ bookingForm.value | json }}
 {{ bookingForm.pristine | json }}
 {{ bookingForm.dirty | json }}
+{{bookingForm.invalid}}
+{{bookingForm.valid}}
 <button mat-raised-button color="primary" type="button" (click)="addPassport()">
   Add Passport
 </button>
@@ -46,6 +48,7 @@
       formControlName="guestName"
       placeholder="guestName"
     />
+    {{bookingForm.get('guestName')?.errors | json}}
     <mat-error *ngIf="bookingForm.get('guestName')?.hasError('minlength')"
       >Name is required and should have minimum 5 characters.</mat-error
     >

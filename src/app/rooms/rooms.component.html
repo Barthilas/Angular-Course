@@ -34,6 +34,7 @@
   <app-rooms-list
     [title]="title"
     [rooms]="rooms"
+    [price]="priceFilter.value!"
     (selectedRoom)="selectRoom($event)"
   ></app-rooms-list>
 </div>
@@ -44,3 +45,8 @@
 <h1>{{ totalBytes }}</h1>
 
 <router-outlet></router-outlet>
+
+{{priceFilter | json}}
+<div>
+  <input type="number" class="form-control" placeholder="Price" [formControl]="priceFilter">
+</div>

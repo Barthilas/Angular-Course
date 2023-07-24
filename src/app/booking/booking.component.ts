@@ -8,6 +8,10 @@ import {
   FormArray,
   Validators,
 } from '@angular/forms';
+import { BookingService } from './service/booking.service';
+import { exhaustMap, mergeMap, switchMap } from 'rxjs';
+import { CustomValidator } from './validators/CustomValidator';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-booking',
@@ -23,12 +27,19 @@ export class BookingComponent implements OnInit {
     return this.bookingForm.get('guests') as FormArray;
   }
 
-  constructor(private configService: ConfigService, private fb: FormBuilder) {}
+  constructor(
+    private configService: ConfigService,
+    private fb: FormBuilder,
+    private bookingService: BookingService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
+    const roomId = this.route.snapshot.paramMap.get('roomid');
+
     this.bookingForm = this.fb.group({
       roomId: new FormControl(
-        { value: '2', disabled: true },
+        { value: roomId, disabled: true },
         { validators: [Validators.required] }
       ), // alternative way.
       guestEmail: [
@@ -61,7 +72,21 @@ export class BookingComponent implements OnInit {
 
     this.bookingForm.valueChanges.subscribe((data) => {
       console.log(data);
+      // this.bookingService.bookRoom(data).subscribe((data) => {});
     });
+
+    // this.bookingForm.valueChanges
+    //   .pipe(
+    //     // does not care about the sequence
+    //     // mergeMap((data) => this.bookingService.bookRoom(data))
+
+    //     // cancel any existing request if new data appear
+    //     // switchMap((data) => this.bookingService.bookRoom(data))
+
+    //     // cares about sequence, waits till subscription is finished.
+    //     exhaustMap((data) => this.bookingService.bookRoom(data))
+    //   )
+    //   .subscribe();
   }
 
   // set vs patch
@@ -76,8 +101,12 @@ export class BookingComponent implements OnInit {
   }
 
   addBooking() {
+    // this.bookingService.bookRoom(this.bookingForm.getRawValue()).subscribe((data) => {
+    //   console.log(data)
+    // })
+
     // console.log(this.bookingForm.value); // disabled properties not available.
-    console.log(this.bookingForm.getRawValue());
+    console.log(this.bookingForm.getRawValue()); // all properties
     this.bookingForm.reset({}); // can be specified to which default values should be reseted.
   }
 
